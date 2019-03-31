@@ -1,25 +1,29 @@
-.App {
+.Loading {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.Loading-logo {
+  animation: App-logo-spin infinite 5s linear;
+  height: 10vmin;
   pointer-events: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Loading-header code {
+  color: #a08c68
+}
+
+.Loading-header {
+  background-color: transparent;
+  min-height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: white;
 }
 
-.App-link {
+.Loading-link {
   color: #61dafb;
 }
 

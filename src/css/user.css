@@ -1,0 +1,14 @@
+.css-show-buttons {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+    box-sizing: border-box;
+    background: black;
+    top: 150px;
+    left: 0px;
+    opacity: 0.1;
+}
+
+.css-show-buttons:hover {
+    opacity: 0.9;
+}
