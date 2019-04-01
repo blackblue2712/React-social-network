@@ -6,6 +6,7 @@ import DefalutAvatar from '../image/avatar.gif';
 import DeleteUser from './DeleteUser';
 import FollowProfileButton from './FollowProfileButton';
 import ProfileTabs from './ProfileTabs';
+import { getPostsByUser } from '../post/apiPost';
 
 require('dotenv').config();
 
@@ -16,7 +17,8 @@ class Profile extends Component {
             user: "",
             redirectToSignin: false,
             isFollowed: false,
-            error: ""
+            error: "",
+            posts: []
         }
     }
 
@@ -55,9 +57,20 @@ class Profile extends Component {
                 this.setState({
                     user: data,
                     isFollowed: this.checkFollow(data),
-                })
+                });
+                this.postByUser(data._id, token);
             }
         });
+    }
+
+    postByUser = (userId, token) => {
+        getPostsByUser(userId, token)
+        .then(data => {
+            if(data.error) console.log(data.error);
+            else {
+                this.setState({ posts: data})
+            }
+        })
     }
 
     componentDidMount() {
@@ -72,11 +85,11 @@ class Profile extends Component {
     }
 
     render() {
-        const { user, redirectToSignin } = this.state;
+        const { user, posts, redirectToSignin } = this.state;
         const photoUrl = user.photo ? `${process.env.REACT_APP_API_URL}/users/photo/${user._id}?${new Date().getTime()}` : DefalutAvatar
         if(redirectToSignin) return <Redirect to="/signin" />
         return <div className="container">
-            <h2 className="mt-5 mb-5 text-dark">Profile</h2>
+            <h2 className="mt-5 mb-5">Profile</h2>
             <div className="row">
                 <div className="col-md-6">
                 <img
@@ -120,6 +133,7 @@ class Profile extends Component {
             <ProfileTabs 
                 followers={user.followers || []}
                 following={user.following || []}
+                posts={posts}
             />
         </div>
     }

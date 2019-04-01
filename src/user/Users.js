@@ -25,7 +25,7 @@ class Users extends Component {
         
             {users.map( (user, index) => {
                 const photoUrl = user.photo ? `${process.env.REACT_APP_API_URL}/users/photo/${user._id}?${new Date().getTime()}` : DefalutAvatar
-                return <div className="card col-md-4 mb-4" key={index}>
+                return <div className="card col-md-3 offset-md-1 mb-4" key={index}>
                    <img
                         src={photoUrl}
                         alt={user.name}

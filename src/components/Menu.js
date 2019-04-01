@@ -5,7 +5,7 @@ import { isAuthenticated, signout } from '../auth';
 
 // Change color if nav is active
 export const isActive = (history, path) => {
-    // console.log(history.location.pathname == path)
+    // console.log(history.location.pathname )
     if (history.location.pathname === path) return {"color": "#58bf74"}
     else return {"color": "#fff"}
 }
@@ -18,6 +18,9 @@ const Menu = (props) => (
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="/users" style={isActive(props.history, "/users")}>Users</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to={`/post/new`} style={isActive(props.history, "/post/new")}>New Post</Link>
             </li>
             {!isAuthenticated() ? (
                 <>
@@ -33,9 +36,7 @@ const Menu = (props) => (
                         <li className="nav-item">
                             <Link className="nav-link" to={`/user/findpeople`} style={isActive(props.history, `/user/findpeople`)}>Find</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to={`/post/new`} style={isActive(props.history, "/post/new")}>New Post</Link>
-                        </li>
+                       
                         <li className="nav-item">
                             <span
                                 className="nav-link"

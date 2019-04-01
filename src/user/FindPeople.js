@@ -56,7 +56,7 @@ class FindPeople extends Component {
         <div className="row"> 
             {users.map( (user, index) => {
                 const photoUrl = user.photo ? `${process.env.REACT_APP_API_URL}/users/photo/${user._id}?${new Date().getTime()}` : DefalutAvatar
-                return <div className="card col-md-4 mb-4 mr-2 p-0" key={index}>
+                return <div className="card col-md-3 offset-md-1 mb-4 mr-2 p-0" key={index}>
                     {<div className="d-flex align-items-end justify-content-around css-show-buttons">
                         <Link className="btn btn-raised btn-primary btn-sm" to={`/user/${user._id}`} >
                             View Profile
@@ -94,7 +94,7 @@ class FindPeople extends Component {
         const { users, open, messageFollow } = this.state;
         return ( 
             <div className="container">
-                <h2 className="mt-5 mb-5 text-dark">Recommend users</h2>
+                <h2 className="mt-5 mb-5">Recommend users</h2>
                 {open && <div className="alert alert-success"><p>{messageFollow}</p></div> }
                 {this.renderUsers(users)}
             </div> 

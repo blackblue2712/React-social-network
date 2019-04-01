@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../auth';
-import { createPost } from './apiPost';
+import { getSinglePost, editPost } from './apiPost';
 import Loading from '../components/Loading';
 import { Redirect } from 'react-router-dom';
 import DefalutAvatar from '../image/avatar.gif';
 
-class EditProfile extends Component {
+class EditPost extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: "",
             title: "",
-            bosy: "",
-            error: "",
-            fileSize: 0,
+            body: "",
             redirectToProfile: false,
             loading: false,
+            error: "",
+            fileSize: 0
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,8 +31,8 @@ class EditProfile extends Component {
             this.setState( {error: "Title too short"} );
             return false;
         }
-        if (fileSize > 1000000) {
-            this.setState( {error: "The file size must less than 100kb"} );
+        if (fileSize > 3000000) {
+            this.setState( {error: "The file size must less than 3Mb"} );
             return false;
         }
         return true
@@ -55,9 +56,9 @@ class EditProfile extends Component {
         this.setState( {loading: true} );
 
         if (this.isValid()) {
-            const userId = isAuthenticated().user._id;
+            const postId = this.props.match.params.postId;
             const token = isAuthenticated().token;
-            createPost(userId, token, this.postData)
+            editPost(postId, token, this.postData)
             .then( data => {
                 console.log(data)
                 if(data.error) this.setState({error: data.error, loading: false})
@@ -74,10 +75,11 @@ class EditProfile extends Component {
 
     }
 
+
     editForm = (title, body) => (
         <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-                <label htmlFor="photo" className="text-muted">Profile Photo</label>
+                <label htmlFor="photo" className="text-muted">Post Photo</label>
                 <input
                     accpet="image/*"
                     name="photo"
@@ -108,21 +110,43 @@ class EditProfile extends Component {
         </form>
     )
 
+    init = (postId) => {
+        getSinglePost(postId)
+        .then( data => {
+            if(data.error) {
+                console.log(data)
+               this.setState({
+                   redirectToProfile: true
+               })
+            }else {
+                console.log(data)
+                this.setState({
+                    title: data.title,
+                    body: data.body,
+                    id: data._id,
+                    photo: data.photo
+                });
+            }
+        });
+    }
+
     componentDidMount() {
         this.postData = new FormData();
-        this.setState({
-            user: isAuthenticated().user
-        })
+
+        const postId = this.props.match.params.postId;
+        // Init edit post
+        this.init(postId);
     }
 
     render() {
-        const { user, title, body, loading, error } = this.state;
-        // const photoUrl = user.photo ? `${process.env.REACT_APP_API_URL}/users/photo/${user._id}?${new Date().getTime()}` : DefalutAvatar;
-        if (this.state.redirectToProfile) return <Redirect to={`/user/${user._id}`} />
+        const { id, photo, title, body, loading, error } = this.state;
+        const photoUrl = photo ? `${process.env.REACT_APP_API_URL}/post/photo/${id}?${new Date().getTime()}` : DefalutAvatar;
+        if (this.state.redirectToProfile) return <Redirect to={`/user/${isAuthenticated().user._id}`} />
+
 
         return (
             <div className="container">
-                <h2 className="mt-5 mb-5">New Post</h2>
+                <h2 className="mt-5 mb-5">Edit post</h2>
 
                 <div
                     className="alert alert-danger"
@@ -132,9 +156,9 @@ class EditProfile extends Component {
                 </div>
 
                 {loading && <Loading />}
-                {/* <img
+                <img
                     src={photoUrl}
-                    alt={name}
+                    alt={title}
                     className="card-img-top"
                     style={{
                         objectFit: "cover",
@@ -142,11 +166,11 @@ class EditProfile extends Component {
                         height: "200px"
                     }}
                     onError={image => image.target.src=DefalutAvatar}
-                /> */}
+                />
                 {this.editForm(title, body)}
             </div>
         );
     }
 }
 
-export default EditProfile;
+export default EditPost;

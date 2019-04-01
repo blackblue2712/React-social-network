@@ -6,9 +6,57 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #121212;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#root{
+  background: #121212;
+}
+div.card {
+  background: #272727;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #3895c5;
+}
+
+div.bmd-list-group-col{
+  padding-bottom: 0px;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+.list-group-item-text{
+  color: #C2C5C6 !important;
+  font-size: 0.675rem;
+}
+
+.list-group-item-heading{
+  color: #32b9a2 !important;
+  font-size: 1.08rem;
+  margin-bottom: 5px;
+}
+
+.card-title{
+  color: #C2C5C6 !important;
+}
+
+.font-italic {
+  color: #C2C5C6 !important;
+}
+
+p{
+  color: #C2C5C6 !important;
+}
+
+/* a, a h1, a h2, a h3, a h4, a h5, a h6, a .card-title{
+  color: #70a992 !important; 
+}
+a.nav-link{
+  color: white !important;
+} */
