@@ -1,7 +1,8 @@
+import SocialLogin from "./SocialLogin";
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import Loading from '../components/Loading';
-import { signin } from '../auth';
+import { signin, authenticate } from '../auth';
 class SignIn extends Component {
     constructor (props) {
         super(props);
@@ -9,7 +10,7 @@ class SignIn extends Component {
             email: "",
             password: "",
             error: "",
-            redirectToRefer: false,
+            redirectToReferrer: false,
             loading: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,13 +25,7 @@ class SignIn extends Component {
         }
     }
     
-    authenticate (jwt, next) {
-        console.log(jwt)
-        if (typeof window !== undefined) {
-            localStorage.setItem("jwt", JSON.stringify(jwt));
-            next();
-        }
-    }
+    
 
     handleSubmit(event) {
         event.preventDefault();
@@ -48,10 +43,10 @@ class SignIn extends Component {
             if (data.error) this.setState( {error: data.error, loading: false} )
             else {
                 // Authenticate
-                this.authenticate (data, () => {
+                authenticate (data, () => {
                     this.setState({
                         loading: true,
-                        redirectToRefer: true
+                        redirectToReferrer: true
                     });
                 });
             }
@@ -107,7 +102,7 @@ class SignIn extends Component {
                 </div>
 
                 {this.signinForm(email, password)}
-
+                <SocialLogin />
                 <em>
                     <Link to="/forgot-password" className="text-primary small text-muted">
                         {" "}
