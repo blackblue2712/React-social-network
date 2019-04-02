@@ -77,3 +77,70 @@ export const editPost = (postId, token, post) => {
     })
     .catch(err => console.log("ERROR - editPost - apiPost", err))
 }
+
+export const like = async (userId, token, postId) => {
+    console.log(JSON.stringify({userId, postId}))
+    return await fetch(`${process.env.REACT_APP_API_URL}/post/like`, {
+        method: "PUT",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({userId, postId})
+    })
+    .then( res => {
+       return res.json()
+    })
+    .catch(err => console.log("ERROR - like - apiPost", err))
+}
+
+export const unlike = async (userId, token, postId) => {
+    return await fetch(`${process.env.REACT_APP_API_URL}/post/unlike`, {
+        method: "PUT",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({userId, postId})
+    })
+    .then( res => {
+       return res.json()
+    })
+    .catch(err => console.log("ERROR - unlike - apiPost", err))
+}
+
+export const comment = async (userId, token, postId, comment) => {
+    console.log(JSON.stringify({userId, postId}))
+    return await fetch(`${process.env.REACT_APP_API_URL}/post/comment`, {
+        method: "PUT",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify( {userId, postId, comment} )
+    })
+    .then( res => {
+       return res.json()
+    })
+    .catch(err => console.log("ERROR - comment - apiPost", err))
+}
+
+export const uncomment = async (userId, token, postId, comment) => {
+    console.log(comment)
+    return await fetch(`${process.env.REACT_APP_API_URL}/post/uncomment`, {
+        method: "PUT",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify( {userId, postId, comment} )
+    })
+    .then( res => {
+       return res.json()
+    })
+    .catch(err => console.log("ERROR - uncomment - apiPost", err))
+}

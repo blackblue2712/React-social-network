@@ -54,7 +54,7 @@ class Posts extends Component {
                         </ul>
 
                         <Link to={`/post/${post._id}`}><h5 className="card-title" style={{fontWeight:410}}>{post.title}</h5></Link>
-                        <p className="font-italic">
+                        <p className="font-italic mb-0">
                             {post.body}
                         </p>
                     </div>
