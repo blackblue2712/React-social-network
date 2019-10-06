@@ -59,7 +59,6 @@ class EditProfile extends Component {
             const token = isAuthenticated().token;
             createPost(userId, token, this.postData)
             .then( data => {
-                console.log(data)
                 if(data.error) this.setState({error: data.error, loading: false})
                 else {
                     this.setState({

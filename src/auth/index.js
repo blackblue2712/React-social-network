@@ -11,7 +11,6 @@ export const isAuthenticated = () => {
 }
 
 export const authenticate = (jwt, next) => {
-    console.log(jwt)
     if (typeof window !== undefined) {
         localStorage.setItem("jwt", JSON.stringify(jwt));
         next();
@@ -27,14 +26,12 @@ export const signout = (next) => {
         method: "GET"
     })
     .then( res => {
-        console.log(res);
         return res.json();
     })
     .catch(err => console.log(err));
 }
 
 export const signin = user => {
-    console.log(process.env.REACT_APP_API_URL)
     return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
         method: "POST",
         headers: {
@@ -97,7 +94,6 @@ export const resetPassword = async resetInfo => {
 };
 
 export const socialLogin = user => {
-    console.log(user)
     return fetch(`${process.env.REACT_APP_API_URL}/social-login`, {
         method: "POST",
         headers: {
@@ -108,7 +104,6 @@ export const socialLogin = user => {
         body: JSON.stringify(user)
     })
         .then(response => {
-            console.log("signin response: ", response);
             return response.json();
         })
         .catch(err => console.log(err));

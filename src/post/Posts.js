@@ -14,7 +14,6 @@ class Posts extends Component {
     componentDidMount () {
         getAllPosts()
         .then( data => {
-            console.log(data)
             if(data.error) console.log(data.error);
             else this.setState({
                 posts: data
@@ -78,7 +77,6 @@ class Posts extends Component {
 
     render () {
         const { posts } = this.state;
-        console.log(posts)
         return ( 
             <div className="container">
                 <h2 className="mt-5 mb-5">Recent post</h2>

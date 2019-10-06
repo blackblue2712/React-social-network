@@ -7,6 +7,7 @@ import DeleteUser from './DeleteUser';
 import FollowProfileButton from './FollowProfileButton';
 import ProfileTabs from './ProfileTabs';
 import { getPostsByUser } from '../post/apiPost';
+import Loading from '../components/Loading';
 
 require('dotenv').config();
 
@@ -17,6 +18,7 @@ class Profile extends Component {
             user: "",
             redirectToSignin: false,
             isFollowed: false,
+            loading: false,
             error: "",
             posts: []
         }
@@ -48,7 +50,6 @@ class Profile extends Component {
         const token = isAuthenticated().token;
         getUser(userId, token)
         .then( data => {
-            console.log(data)
             if(data.error) {
                this.setState({
                    redirectToSignin: true
@@ -66,15 +67,16 @@ class Profile extends Component {
     postByUser = (userId, token) => {
         getPostsByUser(userId, token)
         .then(data => {
-            if(data.error) console.log(data.error);
-            else {
-                this.setState({ posts: data})
+            if(data.error) {
+                this.setState( {loading: true} );
+            } else {
+                this.setState({ posts: data, loading: false})
             }
         })
     }
 
     componentDidMount() {
-        console.log(this.props)
+        this.setState( {loading: true} )
         const userId = this.props.match.params.userId;
         this.init(userId);
     }
@@ -84,12 +86,11 @@ class Profile extends Component {
         this.init(userId);
     }
 
-    render() {
-        const { user, posts, redirectToSignin } = this.state;
+    renderProfile = () =>  {
+        const { user, posts, redirectToSignin } = this.state; 
         const photoUrl = user.photo ? `${process.env.REACT_APP_API_URL}/users/photo/${user._id}?${new Date().getTime()}` : DefalutAvatar
-        if(redirectToSignin) return <Redirect to="/signin" />
-        return <div className="container">
-            <h2 className="mt-5 mb-5">Profile</h2>
+
+        return <>
             <div className="row">
                 <div className="col-md-6">
                 <img
@@ -127,7 +128,7 @@ class Profile extends Component {
                         />
                     )}
                     
-                   
+                
                 </div>
             </div>
             <ProfileTabs 
@@ -135,7 +136,23 @@ class Profile extends Component {
                 following={user.following || []}
                 posts={posts}
             />
-        </div>
+        </>
+    }
+
+    render() {
+        const { redirectToSignin } = this.state;
+        if(redirectToSignin) return <Redirect to="/signin" />
+        return (
+           <div className="container">
+                {this.state.loading && <Loading/>}
+                <h2 className="mt-5 mb-5">Profile</h2>
+                {
+                    this.state.loading
+                    ? <Loading /> 
+                    : this.renderProfile()
+                }   
+            </div>
+        )
     }
 }
 

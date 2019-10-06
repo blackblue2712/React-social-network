@@ -64,7 +64,6 @@ export const onUpdateInfoUser = (user, next) => {
 }
 
 export const follow = (userId, token, followId) => {
-    console.log(userId, token, followId)
     return fetch(`${process.env.REACT_APP_API_URL}/users/follow`, {
         method: "PUT",
         headers: {
@@ -81,7 +80,6 @@ export const follow = (userId, token, followId) => {
 }
 
 export const unfollow = (userId, token, followId) => {
-    console.log(userId, token, followId)
     return fetch(`${process.env.REACT_APP_API_URL}/users/unfollow`, {
         method: "PUT",
         headers: {

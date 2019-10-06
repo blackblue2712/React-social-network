@@ -40,7 +40,6 @@ class Comment extends Component {
 
             comment(userId, token, postId, {text: this.state.text} )         // text: this.state.comment : text in Schema
             .then( data => {
-                console.log(data)
                 if(data.error) console.log(data.error);
                 else {
                     // Dispatch fresh lists comments to parent (SinglePost)
@@ -61,7 +60,6 @@ class Comment extends Component {
 
                 uncomment(userId, token, postId, comment)
                 .then(data => {
-                    console.log(data)
                     if(data.error) {
                         this.setState( {error: data.error} )
                     } else {

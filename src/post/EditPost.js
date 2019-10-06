@@ -60,7 +60,6 @@ class EditPost extends Component {
             const token = isAuthenticated().token;
             editPost(postId, token, this.postData)
             .then( data => {
-                console.log(data)
                 if(data.error) this.setState({error: data.error, loading: false})
                 else {
                     this.setState({
@@ -114,12 +113,12 @@ class EditPost extends Component {
         getSinglePost(postId)
         .then( data => {
             if(data.error) {
-                console.log(data)
+
                this.setState({
                    redirectToProfile: true
                })
             }else {
-                console.log(data)
+ 
                 this.setState({
                     title: data.title,
                     body: data.body,

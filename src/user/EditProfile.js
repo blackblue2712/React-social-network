@@ -62,7 +62,6 @@ class EditProfile extends Component {
     }
     
     authenticate (jwt, next) {
-        console.log(jwt)
         if (typeof window !== undefined) {
             localStorage.setItem("jwt", JSON.stringify(jwt));
             next();
@@ -78,7 +77,6 @@ class EditProfile extends Component {
             const token = isAuthenticated().token;
             editUser(userId, token, this.userData)
             .then( data => {
-                console.log(data)
                 if(data.error) this.setState({error: data.error, loading: false})
                 else {
                     onUpdateInfoUser(data, () => {

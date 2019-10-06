@@ -21,17 +21,14 @@ class ResetPassword extends Component {
         })
         .then( data => {
             if(data.error) {
-                console.log(data.error)
                 this.setState( {error: data.error} );
             } else {
-                console.log(data);
                 this.setState( {message: data.message, newPassword: ""} );
             }
         });
     }
 
     render() {
-        console.log(this.props.match.params.resetPasswordToken)
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Reset your Password</h2>

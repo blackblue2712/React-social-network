@@ -39,10 +39,8 @@ class FindPeople extends Component {
             if(data.error) this.setState( {error: data.error} );
             else {
                 let toFollow = this.state.users;
-                console.log(toFollow)
                 // Xóa user vừa follow ra khỏi state bằng index truyền từ hàm render bên dưới
                 toFollow.splice(index, 1);
-                console.log(toFollow)
                 this.setState({
                     open: true,
                     messageFollow: `Following ${userToFollow.name}`,

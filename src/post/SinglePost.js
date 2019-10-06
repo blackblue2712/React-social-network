@@ -70,7 +70,6 @@ class SinglePost extends Component {
     }
 
     upDateComments = (comments) => {
-        console.log(this);
         this.setState({
             comments: comments.reverse()
         })
@@ -79,7 +78,6 @@ class SinglePost extends Component {
     componentDidMount() {
        getSinglePost(this.props.match.params.postId)
        .then(data => {
-           console.log(data)
            if(data && data.error || data === null) console.log(data)
            else this.setState({
                 post: data,

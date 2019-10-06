@@ -38,7 +38,6 @@ class SignIn extends Component {
         
         signin(user)
         .then( data => {
-            console.log(data)
             // The data is response of fetch method
             if (data.error) this.setState( {error: data.error, loading: false} )
             else {
@@ -82,10 +81,10 @@ class SignIn extends Component {
     )
     
     render () {
-        const { email, password, error, redirectToRefer, loading } = this.state;
+        const { email, password, error, redirectToReferrer, loading } = this.state;
 
         // Redirect when loggin success
-        if (redirectToRefer) {
+        if (redirectToReferrer) {
             return <Redirect to="/" />
         }
 

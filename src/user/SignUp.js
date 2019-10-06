@@ -34,7 +34,6 @@ class SignUp extends Component {
         
         signup(user)
         .then( data => {
-            console.log(data)
             // The data is response of fetch method
             if (data.error) this.setState( {error: data.error} )
             else this.setState({
